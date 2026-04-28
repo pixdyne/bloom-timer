@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { recipes } from '@/data/recipes';
 import { brewers, recipesForBrewer } from '@/data/brewers';
 import { formatMMSS } from '@/lib/time';
+import { Reveal } from '@/components/Reveal';
 
 export const metadata = {
   title: 'All Recipes — Bloom Timer',
@@ -11,11 +12,16 @@ export const metadata = {
 export default function RecipesIndex() {
   return (
     <main className="mx-auto max-w-6xl px-6 py-16 md:px-10 md:py-24">
-      <h1 className="font-display text-5xl tracking-tight md:text-6xl">All Recipes</h1>
-      <p className="mt-6 max-w-prose text-lg text-[var(--color-ink-2)]">
-        Twelve recipes, sorted by brewer. Each has a name, a source, and a verified parameter set.
-      </p>
+      <Reveal>
+        <h1 className="font-display text-5xl tracking-tight md:text-6xl">All Recipes</h1>
+      </Reveal>
+      <Reveal delay={100}>
+        <p className="mt-6 max-w-prose text-lg text-[var(--color-ink-2)]">
+          Twelve recipes, sorted by brewer. Each has a name, a source, and a verified parameter set.
+        </p>
+      </Reveal>
 
+      <Reveal delay={200}>
       {brewers.map((b) => {
         const list = recipesForBrewer(b.slug);
         if (list.length === 0) return null;
@@ -56,6 +62,7 @@ export default function RecipesIndex() {
           </section>
         );
       })}
+      </Reveal>
     </main>
   );
 }
