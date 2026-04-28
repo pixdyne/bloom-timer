@@ -1,9 +1,11 @@
+import { Suspense } from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { recipes, recipeBySlug } from '@/data/recipes';
 import { brewerBySlug } from '@/data/brewers';
 import { formatMMSS } from '@/lib/time';
 import { BrewTimer } from '@/components/BrewTimer';
+import { RecipeScaler } from '@/components/RecipeScaler';
 
 export function generateStaticParams() {
   return recipes.map((r) => ({ slug: r.slug }));
@@ -16,6 +18,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: `${r.author}'s ${r.name} — Bloom Timer`,
     description: r.description,
+    alternates: {
+      canonical: `/recipes/${r.slug}`,
+    },
   };
 }
 
@@ -48,6 +53,9 @@ export default async function RecipePage({ params }: { params: Promise<{ slug: s
         <Spec label="Total" value={formatMMSS(r.totalTimeSec)} />
       </section>
 
+      <Suspense>
+        <RecipeScaler recipe={r} />
+      </Suspense>
       <BrewTimer recipe={r} />
       <p className="-mt-8 mb-12 text-center">
         <Link
