@@ -42,3 +42,25 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+@keyframes bloomring {
+  0%   { transform: scale(0.6); opacity: 0.5; }
+  80%  { opacity: 0; }
+  100% { transform: scale(2); opacity: 0; }
+}
+
+@keyframes bloompulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(0.85); opacity: 0.6; }
+  50%      { transform: translate(-50%, -50%) scale(1.1);  opacity: 1; }
+}
+
+@keyframes herofloat {
+  0%, 100% { transform: translate(-50%, 0); }
+  50%      { transform: translate(-50%, 30px); }
+}
+
+@keyframes water {
+  0%   { transform: scale(0.3);  opacity: 0.7; border-width: 2px; }
+  80%  { opacity: 0; border-width: 0.5px; }
+  100% { transform: scale(0.95); opacity: 0; border-width: 0.5px; }
+}
