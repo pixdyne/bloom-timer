@@ -6,6 +6,7 @@ import { brewerBySlug } from '@/data/brewers';
 import { formatMMSS } from '@/lib/time';
 import { BrewTimer } from '@/components/BrewTimer';
 import { RecipeScaler } from '@/components/RecipeScaler';
+import { XBloomBlock } from '@/components/XBloomBlock';
 
 export function generateStaticParams() {
   return recipes.map((r) => ({ slug: r.slug }));
@@ -65,6 +66,10 @@ export default async function RecipePage({ params }: { params: Promise<{ slug: s
           Open fullscreen ↗
         </Link>
       </p>
+
+      {r.xbloomProfile && (
+        <XBloomBlock profile={r.xbloomProfile} slug={r.slug} />
+      )}
 
       <section className="mt-16">
         <h2 className="font-display text-3xl tracking-tight">Steps</h2>
