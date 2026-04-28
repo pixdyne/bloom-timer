@@ -1,6 +1,11 @@
 import Link from 'next/link';
 import { HeroPhoneDemo } from '@/components/HeroPhoneDemo';
 import { PinnedBrewSection } from '@/components/PinnedBrewSection';
+import { recipes } from '@/data/recipes';
+import { brewers } from '@/data/brewers';
+import { formatMMSS } from '@/lib/time';
+import { Reveal } from '@/components/Reveal';
+import { CalcPreview } from '@/components/CalcPreview';
 
 export default function HomePage() {
   return (
@@ -57,6 +62,99 @@ export default function HomePage() {
 
       {/* PINNED BREW DEMO */}
       <PinnedBrewSection />
+
+      {/* THE LIBRARY */}
+      <section className="mx-auto max-w-7xl px-6 py-32 md:px-10 md:py-36">
+        <Reveal>
+          <p className="font-mono text-xs uppercase tracking-[0.18em] text-[var(--color-accent)]">
+            <span className="mr-3 inline-block h-px w-6 align-middle bg-[var(--color-accent)]" />
+            the library
+          </p>
+        </Reveal>
+        <Reveal delay={100}>
+          <h2 className="mt-4 font-display text-[clamp(44px,5.5vw,80px)] leading-[0.98] tracking-[-0.02em] max-w-[18ch]">
+            Twelve recipes, <em className="text-[var(--color-accent)]">worth memorising.</em>
+          </h2>
+        </Reveal>
+        <Reveal delay={200}>
+          <p className="mt-6 mb-20 max-w-[56ch] text-[19px] leading-[1.55] text-[var(--color-ink-2)]">
+            Every recipe has a name, a source, and a reason. Championship winners, world-class daily
+            drivers, the standards that keep specialty cafes running. We brewed every single one.
+          </p>
+        </Reveal>
+        <Reveal delay={300}>
+          <ul className="grid grid-cols-1 gap-px border-y border-[var(--color-line)] bg-[var(--color-line)] sm:grid-cols-2 lg:grid-cols-3">
+            {recipes.map((r, i) => (
+              <li key={r.slug} className="bg-[var(--color-bg)]">
+                <Link
+                  href={`/recipes/${r.slug}`}
+                  className="group relative block min-h-[240px] p-9 transition-colors hover:bg-[var(--color-bg-warm)]"
+                >
+                  <span aria-hidden="true" className="pointer-events-none absolute bottom-0 left-0 h-px w-0 bg-[var(--color-accent)] transition-[width] duration-500 group-hover:w-full" />
+                  <span aria-hidden="true" className="absolute right-8 top-8 text-[var(--color-muted)] transition-all duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-[var(--color-accent)]">
+                    ↗
+                  </span>
+                  <p className="font-mono text-[11px] tracking-[0.05em] text-[var(--color-muted)]">
+                    № {String(i + 1).padStart(2, '0')} · {r.brewer}
+                  </p>
+                  <h3 className="mt-4 font-display text-[32px] leading-[1.1] tracking-[-0.01em]">{r.name}</h3>
+                  <p className="mt-1.5 text-sm italic text-[var(--color-ink-3)]">— {r.author}</p>
+                  <p className="mt-7 flex items-baseline justify-between font-mono text-xs text-[var(--color-ink-2)]">
+                    <span>{formatMMSS(r.totalTimeSec)} · {r.baseDose}g</span>
+                    <span className="font-medium text-[var(--color-accent)]">1:{r.baseRatio}</span>
+                  </p>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
+      </section>
+
+      {/* CALCULATOR PREVIEW */}
+      <Reveal>
+        <CalcPreview />
+      </Reveal>
+
+      {/* BREWERS */}
+      <section className="mx-auto max-w-7xl px-6 py-32 md:px-10 md:py-36">
+        <Reveal>
+          <p className="font-mono text-xs uppercase tracking-[0.18em] text-[var(--color-accent)]">
+            <span className="mr-3 inline-block h-px w-6 align-middle bg-[var(--color-accent)]" />
+            by brewer
+          </p>
+        </Reveal>
+        <Reveal delay={100}>
+          <h2 className="mt-4 font-display text-[clamp(44px,5.5vw,80px)] leading-[0.98] tracking-[-0.02em] max-w-[18ch]">
+            Seven brewers, <em className="text-[var(--color-accent)]">covered.</em>
+          </h2>
+        </Reveal>
+        <Reveal delay={200}>
+          <p className="mt-6 mb-20 max-w-[56ch] text-[19px] leading-[1.55] text-[var(--color-ink-2)]">
+            Each brewer has its own page with the full recipe lineup, a brief on what to use it for, and a grind reference.
+          </p>
+        </Reveal>
+        <Reveal delay={300}>
+          <ul className="grid grid-cols-2 border-y border-[var(--color-line)] sm:grid-cols-3 lg:grid-cols-7">
+            {brewers.map((b, i) => {
+              const count = recipes.filter((r) => r.brewer === b.slug).length;
+              return (
+                <li key={b.slug} className="border-b border-r border-[var(--color-line)] last:border-r-0 lg:border-b-0">
+                  <Link
+                    href={`/brewers/${b.slug}`}
+                    className="group block py-14 px-6 text-center transition-colors hover:bg-[var(--color-bg-warm)]"
+                  >
+                    <p className="mb-6 font-mono text-[11px] text-[var(--color-muted)]">{String(i + 1).padStart(2, '0')}</p>
+                    <p className="font-display text-[28px] leading-[1.05] tracking-[-0.01em]">{b.short}</p>
+                    <p className="mt-2 text-xs text-[var(--color-ink-3)] transition-colors group-hover:text-[var(--color-accent)]">
+                      {count} {count === 1 ? 'recipe' : 'recipes'} →
+                    </p>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </Reveal>
+      </section>
     </>
   );
 }
