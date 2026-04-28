@@ -42,6 +42,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <ul className="flex gap-1 text-sm">
               <li><a href="/recipes" className="rounded-full px-3 py-1.5 text-[var(--color-ink-2)] hover:bg-[var(--color-bg-warm)] hover:text-[var(--color-ink)]">Recipes</a></li>
               <li><a href="/calculator" className="rounded-full px-3 py-1.5 text-[var(--color-ink-2)] hover:bg-[var(--color-bg-warm)] hover:text-[var(--color-ink)]">Calculator</a></li>
+              <li><a href="/xbloom" className="rounded-full px-3 py-1.5 text-[var(--color-ink-2)] hover:bg-[var(--color-bg-warm)] hover:text-[var(--color-ink)]">xBloom</a></li>
               <li><a href="/brewers" className="rounded-full px-3 py-1.5 text-[var(--color-ink-2)] hover:bg-[var(--color-bg-warm)] hover:text-[var(--color-ink)]">Brewers</a></li>
             </ul>
           </div>
