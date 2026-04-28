@@ -40,4 +40,27 @@ describe('recipes data integrity', () => {
   it('recipeBySlug returns undefined for unknown slug', () => {
     expect(recipeBySlug('does-not-exist')).toBeUndefined();
   });
+
+  it('every recipe has an xbloomProfile', () => {
+    for (const r of recipes) {
+      expect(r.xbloomProfile).toBeDefined();
+    }
+  });
+
+  it('xbloomProfile total_g matches dose × ratio (within 1.5g)', () => {
+    for (const r of recipes) {
+      const expected = r.baseDose * r.baseRatio;
+      expect(r.xbloomProfile!.water.total_g).toBeGreaterThan(expected - 1.5);
+      expect(r.xbloomProfile!.water.total_g).toBeLessThan(expected + 1.5);
+    }
+  });
+
+  it('xbloomProfile pours are non-empty for pour-based recipes', () => {
+    for (const r of recipes) {
+      const hasPourSteps = r.steps.some((s) => s.action === 'pour-to');
+      if (hasPourSteps) {
+        expect(r.xbloomProfile!.pours.length).toBeGreaterThan(0);
+      }
+    }
+  });
 });
