@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { recipes, recipeBySlug } from '@/data/recipes';
 import { brewerBySlug } from '@/data/brewers';
@@ -48,6 +49,14 @@ export default async function RecipePage({ params }: { params: Promise<{ slug: s
       </section>
 
       <BrewTimer recipe={r} />
+      <p className="-mt-8 mb-12 text-center">
+        <Link
+          href={`/recipes/${r.slug}/play`}
+          className="inline-block rounded-full border border-[var(--color-line-strong)] px-5 py-2 font-mono text-xs uppercase tracking-[0.18em] text-[var(--color-ink-2)] transition hover:bg-[var(--color-ink)] hover:text-[var(--color-bg)]"
+        >
+          Open fullscreen ↗
+        </Link>
+      </p>
 
       <section className="mt-16">
         <h2 className="font-display text-3xl tracking-tight">Steps</h2>

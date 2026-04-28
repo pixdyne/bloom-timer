@@ -32,8 +32,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body
-        className={`${instrumentSerif.variable} ${geist.variable} ${geistMono.variable} font-sans antialiased`}
+        className={`${instrumentSerif.variable} ${geist.variable} ${geistMono.variable} antialiased font-sans`}
       >
+        <nav className="border-b border-[var(--color-line)]">
+          <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 md:px-10">
+            <a href="/" className="font-display text-2xl tracking-tight">
+              bloom<em className="not-italic text-[var(--color-accent)]">.</em>
+            </a>
+            <ul className="flex gap-1 text-sm">
+              <li><a href="/recipes" className="rounded-full px-3 py-1.5 text-[var(--color-ink-2)] hover:bg-[var(--color-bg-warm)] hover:text-[var(--color-ink)]">Recipes</a></li>
+              <li><a href="/brewers" className="rounded-full px-3 py-1.5 text-[var(--color-ink-2)] hover:bg-[var(--color-bg-warm)] hover:text-[var(--color-ink)]">Brewers</a></li>
+            </ul>
+          </div>
+        </nav>
         {children}
       </body>
     </html>
