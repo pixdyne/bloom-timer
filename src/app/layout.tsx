@@ -32,7 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body
-        className={`${instrumentSerif.variable} ${geist.variable} ${geistMono.variable} antialiased font-sans`}
+        className={`${instrumentSerif.variable} ${geist.variable} ${geistMono.variable} font-sans antialiased`}
       >
         {children}
       </body>

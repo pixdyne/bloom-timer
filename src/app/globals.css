@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
   --color-bg: #f8f6f1;
@@ -19,18 +19,24 @@
 }
 
 @layer base {
-  html, body {
+  html,
+  body {
     background: var(--color-bg);
     color: var(--color-ink);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
 
-  ::selection { background: var(--color-accent); color: var(--color-bg); }
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-bg);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
