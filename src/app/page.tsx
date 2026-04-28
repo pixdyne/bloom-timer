@@ -155,6 +155,87 @@ export default function HomePage() {
           </ul>
         </Reveal>
       </section>
+
+      {/* JOURNAL — placeholder until Plan 4 wires Sanity */}
+      <section className="mx-auto max-w-7xl px-6 py-32 md:px-10 md:py-36">
+        <Reveal>
+          <p className="font-mono text-xs uppercase tracking-[0.18em] text-[var(--color-accent)]">
+            <span className="mr-3 inline-block h-px w-6 align-middle bg-[var(--color-accent)]" />
+            from the journal
+          </p>
+        </Reveal>
+        <Reveal delay={100}>
+          <h2 className="mt-4 mb-12 font-display text-[clamp(44px,5.5vw,80px)] leading-[0.98] tracking-[-0.02em] max-w-[18ch]">
+            On coffee, <em className="text-[var(--color-accent)]">thinking aloud.</em>
+          </h2>
+        </Reveal>
+        <Reveal delay={200}>
+          <ul className="grid gap-8 md:grid-cols-3">
+            {[
+              { tag: 'method · 8 min', title: 'Why the bloom matters more than you think.', tone: 'plain' as const, date: 'Coming with v1' },
+              { tag: 'interview · 14 min', title: "Tetsu Kasuya on the recipe he wishes he'd never named.", tone: 'warm' as const, date: 'Coming with v1' },
+              { tag: 'equipment · 6 min', title: 'A field guide to grinder burrs, for the curious.', tone: 'deep' as const, date: 'Coming with v1' },
+            ].map((p) => (
+              <li key={p.title}>
+                <div
+                  aria-label="placeholder"
+                  className="mb-5 flex aspect-[4/3] items-center justify-center overflow-hidden rounded-2xl"
+                  style={{
+                    background:
+                      p.tone === 'warm'
+                        ? 'linear-gradient(135deg, var(--color-accent-light) 0%, var(--color-accent) 100%)'
+                        : p.tone === 'deep'
+                          ? 'linear-gradient(135deg, var(--color-ink-2) 0%, var(--color-ink) 100%)'
+                          : 'linear-gradient(135deg, var(--color-bg-warm) 0%, var(--color-bg-deep) 100%)',
+                  }}
+                >
+                  <span className="font-mono text-[11px] uppercase tracking-[0.2em]" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                    [ photo ]
+                  </span>
+                </div>
+                <p className="mb-2.5 font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--color-accent)]">— {p.tag}</p>
+                <h4 className="font-display text-[26px] leading-[1.15] tracking-[-0.01em]">{p.title}</h4>
+                <p className="mt-2 text-[13px] text-[var(--color-ink-3)]">{p.date}</p>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
+      </section>
+
+      {/* CTA BANNER */}
+      <section className="relative overflow-hidden px-6 py-40 text-center md:py-48">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute left-1/2 top-1/2 -z-0 h-[1000px] w-[1000px] -translate-x-1/2 -translate-y-1/2"
+          style={{ background: 'radial-gradient(circle, rgba(200, 105, 58, 0.08) 0%, transparent 50%)' }}
+        />
+        <div className="relative">
+          <Reveal>
+            <h2 className="mx-auto max-w-[14ch] font-display text-[clamp(56px,7vw,104px)] leading-[0.95] tracking-[-0.025em]">
+              Make a <em className="text-[var(--color-accent)]">better</em> cup, tomorrow morning.
+            </h2>
+          </Reveal>
+          <Reveal delay={100}>
+            <p className="mt-8 text-[19px] text-[var(--color-ink-2)]">Bookmark it. Open it. Brew alongside the best.</p>
+          </Reveal>
+          <Reveal delay={200}>
+            <div className="mt-10 flex flex-wrap justify-center gap-3">
+              <Link
+                href="/recipes/hoffmann-v60"
+                className="inline-flex items-center gap-2 rounded-full bg-[var(--color-ink)] px-6 py-3.5 text-sm font-medium text-[var(--color-bg)] transition hover:-translate-y-px hover:shadow-[0_8px_24px_rgba(26,22,18,0.15)]"
+              >
+                Start brewing <span aria-hidden="true">→</span>
+              </Link>
+              <Link
+                href="/recipes"
+                className="inline-flex items-center gap-2 rounded-full border border-[var(--color-line-strong)] px-6 py-3.5 text-sm font-medium text-[var(--color-ink)] transition hover:border-[var(--color-ink)] hover:bg-[var(--color-bg-warm)]"
+              >
+                Browse all 12 recipes
+              </Link>
+            </div>
+          </Reveal>
+        </div>
+      </section>
     </>
   );
 }
