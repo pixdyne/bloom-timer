@@ -8,8 +8,17 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text', 'html', 'lcov'],
-      include: ['src/lib/**/*.ts', 'src/hooks/**/*.ts', 'src/components/**/*.{ts,tsx}'],
-      exclude: ['**/*.d.ts', '**/types.ts', 'src/data/**'],
+      // Plan 1 scope: pure logic + utilities only.
+      // UI components (BrewTimer, FullscreenTimer) and browser-API wrappers
+      // (useWakeLock, audio) are exercised by E2E tests in Plan 4.
+      include: ['src/lib/**/*.ts', 'src/hooks/**/*.ts'],
+      exclude: [
+        '**/*.d.ts',
+        '**/types.ts',
+        'src/data/**',
+        'src/hooks/useWakeLock.ts',
+        'src/lib/audio.ts',
+      ],
       thresholds: {
         statements: 80,
         branches: 80,
