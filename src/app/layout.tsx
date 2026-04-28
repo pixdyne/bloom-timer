@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono, Instrument_Serif } from 'next/font/google';
 import './globals.css';
 import { SiteNav } from '@/components/SiteNav';
+import { SiteFooter } from '@/components/SiteFooter';
 
 const instrumentSerif = Instrument_Serif({
   variable: '--font-display',
@@ -36,7 +37,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         className={`${instrumentSerif.variable} ${geist.variable} ${geistMono.variable} antialiased font-sans`}
       >
         <SiteNav />
-        <div className="pt-[68px]">{children}</div>
+        <div className="flex min-h-screen flex-col pt-[68px]">
+          <div className="flex-1">{children}</div>
+          <SiteFooter />
+        </div>
       </body>
     </html>
   );
