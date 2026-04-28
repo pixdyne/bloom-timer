@@ -1,6 +1,6 @@
 export const MIN_CUPS = 1;
 export const MAX_CUPS = 4;
-export const MIN_RATIO = 12;
+export const MIN_RATIO = 8;
 export const MAX_RATIO = 20;
 
 export type ScaleParamsDefaults = {
@@ -14,6 +14,11 @@ export type ScaleParamsResult = {
   isDefault: boolean;
 };
 
+/**
+ * Parse `cups` and `ratio` from URL search params, clamped to allowed ranges.
+ * Defaults are also clamped so callers can pass per-recipe defaults that may
+ * fall outside [MIN_*, MAX_*] without breaking `isDefault`.
+ */
 export function parseScaleParams(
   params: URLSearchParams,
   defaults: ScaleParamsDefaults,
@@ -21,10 +26,13 @@ export function parseScaleParams(
   const cupsRaw = params.get('cups');
   const ratioRaw = params.get('ratio');
 
-  const cups = clampInt(parseNumber(cupsRaw, defaults.defaultCups), MIN_CUPS, MAX_CUPS);
-  const ratio = clampFloat(parseNumber(ratioRaw, defaults.defaultRatio), MIN_RATIO, MAX_RATIO);
+  const clampedDefaultCups = clampInt(defaults.defaultCups, MIN_CUPS, MAX_CUPS);
+  const clampedDefaultRatio = clampFloat(defaults.defaultRatio, MIN_RATIO, MAX_RATIO);
 
-  const isDefault = cups === defaults.defaultCups && ratio === defaults.defaultRatio;
+  const cups = clampInt(parseNumber(cupsRaw, clampedDefaultCups), MIN_CUPS, MAX_CUPS);
+  const ratio = clampFloat(parseNumber(ratioRaw, clampedDefaultRatio), MIN_RATIO, MAX_RATIO);
+
+  const isDefault = cups === clampedDefaultCups && ratio === clampedDefaultRatio;
 
   return { cups, ratio, isDefault };
 }

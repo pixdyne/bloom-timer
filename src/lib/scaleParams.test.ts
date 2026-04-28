@@ -58,4 +58,14 @@ describe('parseScaleParams', () => {
     expect(parseScaleParams(new URLSearchParams('?cups=1&ratio=16.7'), defaults).isDefault).toBe(true);
     expect(parseScaleParams(new URLSearchParams('?cups=2'), defaults).isDefault).toBe(false);
   });
+
+  it('clamps out-of-range defaults so isDefault still works', () => {
+    // Moka recipe scenario: baseRatio is 10, below MIN_RATIO=8 we'd be fine, but
+    // if a recipe ever has e.g. baseRatio: 25 (above MAX_RATIO=20) the default
+    // should still produce isDefault: true on an empty query.
+    const params = new URLSearchParams();
+    const result = parseScaleParams(params, { defaultCups: 1, defaultRatio: 25 });
+    expect(result.ratio).toBe(MAX_RATIO);
+    expect(result.isDefault).toBe(true);
+  });
 });
