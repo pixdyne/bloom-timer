@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import { recipes, recipeBySlug } from '@/data/recipes';
 import { brewerBySlug } from '@/data/brewers';
 import { formatMMSS } from '@/lib/time';
+import { BrewTimer } from '@/components/BrewTimer';
 
 export function generateStaticParams() {
   return recipes.map((r) => ({ slug: r.slug }));
@@ -46,7 +47,7 @@ export default async function RecipePage({ params }: { params: Promise<{ slug: s
         <Spec label="Total" value={formatMMSS(r.totalTimeSec)} />
       </section>
 
-      {/* TIMER INSERTED HERE in Task 25 */}
+      <BrewTimer recipe={r} />
 
       <section className="mt-16">
         <h2 className="font-display text-3xl tracking-tight">Steps</h2>
