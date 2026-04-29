@@ -111,10 +111,16 @@ export function PinnedBrewSection() {
               how it works
             </p>
             <h3
-              className="mt-4 font-display text-4xl leading-none tracking-[-0.02em] md:text-6xl"
+              key={`heading-${stageIdx}`}
+              className="mt-4 font-display text-4xl leading-none tracking-[-0.02em] animate-[stagefade_500ms_cubic-bezier(0.16,1,0.3,1)] md:text-6xl"
               dangerouslySetInnerHTML={{ __html: stage.copyHeadingHTML }}
             />
-            <p className="mt-6 max-w-prose text-lg text-[var(--color-ink-2)]">{stage.copyBody}</p>
+            <p
+              key={`body-${stageIdx}`}
+              className="mt-6 max-w-prose text-lg text-[var(--color-ink-2)] animate-[stagefade_500ms_cubic-bezier(0.16,1,0.3,1)_80ms_backwards]"
+            >
+              {stage.copyBody}
+            </p>
 
             <div className="mt-10 flex flex-col gap-1">
               {STAGES.map((s, i) => {
@@ -164,7 +170,12 @@ export function PinnedBrewSection() {
               </div>
               <div className="absolute bottom-12 left-1/2 -translate-x-1/2 text-center text-[var(--color-bg)]">
                 <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--color-accent)]">pour to</p>
-                <p className="font-display text-2xl italic md:text-[32px]">{stage.target}g</p>
+                <p
+                  key={`target-${stageIdx}`}
+                  className="font-display text-2xl italic animate-[stagefade_500ms_cubic-bezier(0.16,1,0.3,1)] md:text-[32px]"
+                >
+                  {stage.target}g
+                </p>
               </div>
             </div>
           </div>
