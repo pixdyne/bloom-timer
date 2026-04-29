@@ -102,7 +102,7 @@ export function PinnedBrewSection() {
   const ss = String(Math.floor(secElapsed % 60)).padStart(2, '0');
 
   return (
-    <section className="overflow-hidden bg-[var(--color-bg-deep)]">
+    <section className="bg-[var(--color-bg-deep)]">
       <div ref={wrapRef} className="relative h-[400vh]">
         <div className="sticky top-0 mx-auto grid h-screen max-w-7xl items-center gap-12 px-6 md:grid-cols-2 md:gap-20 md:px-10">
           <div>
