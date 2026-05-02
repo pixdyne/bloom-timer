@@ -28,6 +28,7 @@ export function SiteNav() {
           <li className="hidden md:block"><a href="/calculator" className="rounded-full px-3 py-1.5 text-[var(--color-ink-2)] transition-colors hover:bg-[var(--color-bg-warm)] hover:text-[var(--color-ink)]">Calculator</a></li>
           <li className="hidden md:block"><a href="/xbloom" className="rounded-full px-3 py-1.5 text-[var(--color-ink-2)] transition-colors hover:bg-[var(--color-bg-warm)] hover:text-[var(--color-ink)]">xBloom</a></li>
           <li className="hidden md:block"><a href="/brewers" className="rounded-full px-3 py-1.5 text-[var(--color-ink-2)] transition-colors hover:bg-[var(--color-bg-warm)] hover:text-[var(--color-ink)]">Brewers</a></li>
+          <li className="hidden md:block"><a href="/blog" className="rounded-full px-3 py-1.5 text-[var(--color-ink-2)] transition-colors hover:bg-[var(--color-bg-warm)] hover:text-[var(--color-ink)]">Journal</a></li>
           <li>
             <a
               href="/recipes/hoffmann-v60"
