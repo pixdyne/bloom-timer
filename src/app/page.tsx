@@ -6,8 +6,19 @@ import { brewers } from '@/data/brewers';
 import { formatMMSS } from '@/lib/time';
 import { Reveal } from '@/components/Reveal';
 import { CalcPreview } from '@/components/CalcPreview';
+import { fetchLatestBlogPosts } from '@/lib/sanity/queries';
+import { urlFor } from '@/lib/sanity/client';
 
-export default function HomePage() {
+function formatJournalDate(iso: string): string {
+  return new Date(iso).toLocaleDateString('en-GB', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+  });
+}
+
+export default async function HomePage() {
+  const journalPosts = await fetchLatestBlogPosts(3).catch(() => []);
   return (
     <>
       {/* HERO */}
@@ -156,51 +167,77 @@ export default function HomePage() {
         </Reveal>
       </section>
 
-      {/* JOURNAL — placeholder until Plan 4 wires Sanity */}
-      <section className="mx-auto max-w-7xl px-6 py-32 md:px-10 md:py-36">
-        <Reveal>
-          <p className="font-mono text-xs uppercase tracking-[0.18em] text-[var(--color-accent)]">
-            <span className="mr-3 inline-block h-px w-6 align-middle bg-[var(--color-accent)]" />
-            from the journal
-          </p>
-        </Reveal>
-        <Reveal delay={100}>
-          <h2 className="mt-4 mb-12 font-display text-[clamp(44px,5.5vw,80px)] leading-[0.98] tracking-[-0.02em] max-w-[18ch]">
-            On coffee, <em className="text-[var(--color-accent)]">thinking aloud.</em>
-          </h2>
-        </Reveal>
-        <Reveal delay={200}>
-          <ul className="grid gap-8 md:grid-cols-3">
-            {[
-              { tag: 'method · 8 min', title: 'Why the bloom matters more than you think.', tone: 'plain' as const, date: 'Coming with v1' },
-              { tag: 'interview · 14 min', title: "Tetsu Kasuya on the recipe he wishes he'd never named.", tone: 'warm' as const, date: 'Coming with v1' },
-              { tag: 'equipment · 6 min', title: 'A field guide to grinder burrs, for the curious.', tone: 'deep' as const, date: 'Coming with v1' },
-            ].map((p) => (
-              <li key={p.title}>
-                <div
-                  aria-label="placeholder"
-                  className="mb-5 flex aspect-[4/3] items-center justify-center overflow-hidden rounded-2xl"
-                  style={{
-                    background:
-                      p.tone === 'warm'
-                        ? 'linear-gradient(135deg, var(--color-accent-light) 0%, var(--color-accent) 100%)'
-                        : p.tone === 'deep'
-                          ? 'linear-gradient(135deg, var(--color-ink-2) 0%, var(--color-ink) 100%)'
-                          : 'linear-gradient(135deg, var(--color-bg-warm) 0%, var(--color-bg-deep) 100%)',
-                  }}
-                >
-                  <span className="font-mono text-[11px] uppercase tracking-[0.2em]" style={{ color: 'rgba(255,255,255,0.5)' }}>
-                    [ photo ]
-                  </span>
-                </div>
-                <p className="mb-2.5 font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--color-accent)]">— {p.tag}</p>
-                <h4 className="font-display text-[26px] leading-[1.15] tracking-[-0.01em]">{p.title}</h4>
-                <p className="mt-2 text-[13px] text-[var(--color-ink-3)]">{p.date}</p>
-              </li>
-            ))}
-          </ul>
-        </Reveal>
-      </section>
+      {/* JOURNAL — latest 3 posts from Sanity (section hides if none) */}
+      {journalPosts.length > 0 ? (
+        <section className="mx-auto max-w-7xl px-6 py-32 md:px-10 md:py-36">
+          <Reveal>
+            <p className="font-mono text-xs uppercase tracking-[0.18em] text-[var(--color-accent)]">
+              <span className="mr-3 inline-block h-px w-6 align-middle bg-[var(--color-accent)]" />
+              from the journal
+            </p>
+          </Reveal>
+          <Reveal delay={100}>
+            <div className="mt-4 mb-12 flex flex-wrap items-end justify-between gap-6">
+              <h2 className="font-display text-[clamp(44px,5.5vw,80px)] leading-[0.98] tracking-[-0.02em] max-w-[18ch]">
+                On coffee, <em className="text-[var(--color-accent)]">thinking aloud.</em>
+              </h2>
+              <Link
+                href="/blog"
+                className="inline-flex items-center gap-2 rounded-full border border-[var(--color-line-strong)] px-5 py-2.5 text-sm font-medium text-[var(--color-ink)] transition hover:border-[var(--color-ink)] hover:bg-[var(--color-bg-warm)]"
+              >
+                All entries <span aria-hidden="true">→</span>
+              </Link>
+            </div>
+          </Reveal>
+          <Reveal delay={200}>
+            <ul className="grid gap-8 md:grid-cols-3">
+              {journalPosts.map((post, index) => {
+                const hero = post.mainImage?.asset?._ref
+                  ? urlFor(post.mainImage).width(1200).height(900).fit('crop').url()
+                  : null;
+                return (
+                  <li key={post._id}>
+                    <Link
+                      href={`/blog/${post.slug.current}`}
+                      className="group block focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-4 focus-visible:ring-offset-[var(--color-bg)]"
+                    >
+                      <div className="relative mb-5 flex aspect-[4/3] items-center justify-center overflow-hidden rounded-2xl bg-[var(--color-bg-warm)]">
+                        {hero ? (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img
+                            src={hero}
+                            alt={post.mainImage.alt ?? post.title}
+                            loading={index === 0 ? 'eager' : 'lazy'}
+                            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                          />
+                        ) : (
+                          <span
+                            className="font-mono text-[11px] uppercase tracking-[0.2em] text-[var(--color-muted)]"
+                          >
+                            [ photo ]
+                          </span>
+                        )}
+                      </div>
+                      <p className="mb-2.5 font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--color-accent)]">
+                        — {post.category}
+                      </p>
+                      <h4 className="font-display text-[26px] leading-[1.15] tracking-[-0.01em] transition-colors group-hover:text-[var(--color-accent)]">
+                        {post.title}
+                      </h4>
+                      <time
+                        dateTime={post.publishedAt}
+                        className="mt-2 block font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--color-ink-3)]"
+                      >
+                        {formatJournalDate(post.publishedAt)}
+                      </time>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </Reveal>
+        </section>
+      ) : null}
 
       {/* CTA BANNER */}
       <section className="relative overflow-hidden px-6 py-40 text-center md:py-48">

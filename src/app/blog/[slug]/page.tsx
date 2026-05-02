@@ -184,6 +184,17 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     ? urlFor(post.mainImage).width(2000).height(1200).fit('crop').url()
     : null
 
+  const contentImageUrl = post.contentImage?.asset?._ref
+    ? urlFor(post.contentImage).width(1600).fit('max').url()
+    : null
+
+  const contentBlocks = (post.content as readonly unknown[] | undefined) ?? []
+  const splitAt = contentImageUrl
+    ? Math.max(1, Math.floor(contentBlocks.length / 2))
+    : contentBlocks.length
+  const contentBefore = contentBlocks.slice(0, splitAt)
+  const contentAfter = contentBlocks.slice(splitAt)
+
   const latest = await fetchLatestBlogPosts(4)
   const related = latest.filter((p) => p._id !== post._id).slice(0, 3)
 
@@ -268,9 +279,33 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
         <div className="font-sans">
           <PortableText
-            value={post.content as never}
+            value={contentBefore as never}
             components={portableComponents}
           />
+
+          {contentImageUrl ? (
+            <figure className="my-12 -mx-4 overflow-hidden rounded-2xl bg-[var(--color-bg-warm)] md:-mx-12">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={contentImageUrl}
+                alt={post.contentImage?.alt ?? ''}
+                loading="lazy"
+                className="h-auto w-full"
+              />
+              {post.contentImage?.alt ? (
+                <figcaption className="px-6 py-3 text-center font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--color-muted)]">
+                  {post.contentImage.alt}
+                </figcaption>
+              ) : null}
+            </figure>
+          ) : null}
+
+          {contentAfter.length > 0 ? (
+            <PortableText
+              value={contentAfter as never}
+              components={portableComponents}
+            />
+          ) : null}
         </div>
 
         <footer className="mt-20 flex flex-wrap items-center justify-between gap-4 border-t border-[var(--color-line)] pt-8 text-[13px] text-[var(--color-ink-3)]">
