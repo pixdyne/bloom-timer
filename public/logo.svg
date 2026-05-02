@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 64" role="img" aria-label="bloom.">
+  <title>bloom.</title>
+  <!-- Mark, scaled into the lockup at 48x48 with a 4px breathing margin -->
+  <g transform="translate(4 8)">
+    <path fill="#c8693a" d="M12 22.5a12 12 0 0 1 24 0z"/>
+    <path fill="#1a1612" d="M10.5 22.5h27L27.4 39a2.25 2.25 0 0 1-1.95 1.13h-2.85A2.25 2.25 0 0 1 20.6 39z"/>
+    <path fill="#f8f6f1" d="M18 22.5a6 6 0 0 1 12 0z"/>
+    <circle cx="24" cy="25.5" r="1.8" fill="#1a1612"/>
+  </g>
+  <!-- Wordmark: "bloom." set in a serif stack matching the brand display font (Instrument Serif → Apple/iowan/Georgia fallback). -->
+  <text
+    x="64"
+    y="44"
+    fill="#1a1612"
+    font-family="'Instrument Serif', 'Iowan Old Style', 'Apple Garamond', Georgia, 'Times New Roman', serif"
+    font-size="40"
+    font-weight="400"
+    letter-spacing="-0.5"
+  >bloom<tspan fill="#c8693a">.</tspan></text>
+</svg>

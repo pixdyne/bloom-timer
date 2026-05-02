@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Bloom Timer">
+  <title>Bloom Timer</title>
+  <!-- Bloom dome: the rising CO2 dome of a fresh pour. Solid silhouette for legibility at 16px. -->
+  <path fill="#c8693a" d="M16 30a16 16 0 0 1 32 0z"/>
+  <!-- Dripper cone: V60 silhouette in deep ink. Inverted trapezoid with rounded base. -->
+  <path fill="#1a1612" d="M14 30h36L36.5 52a3 3 0 0 1-2.6 1.5h-3.8A3 3 0 0 1 27.5 52z"/>
+  <!-- Negative-space bloom ring: a thin slot inside the dome reading as a pulse / timer arc. -->
+  <path fill="#f8f6f1" d="M24 30a8 8 0 0 1 16 0z"/>
+  <!-- Center drop: the single bead of water meeting the grounds. -->
+  <circle cx="32" cy="34" r="2.4" fill="#1a1612"/>
+</svg>
